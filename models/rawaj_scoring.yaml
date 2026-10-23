@@ -24,7 +24,7 @@ flows:
   - {id: f05, source: scorer, target: case_db, data: [flag, explanation], protocol: tls, authenticated: true}
   - {id: f06, source: scorer, target: audit_log, data: [decision_record], protocol: tls, authenticated: true}
   - {id: f07, source: analyst, target: analyst_console, data: [case_decision], protocol: https, authenticated: true}
-  - {id: f08, source: analyst_console, target: case_db, data: [case_decision, customer_pii], protocol: postgres, authenticated: true}
+  - {id: f08, source: analyst_console, target: case_db, data: [case_decision, customer_pii], protocol: https, authenticated: true}
 threats:
   - id: T1
     target: f01
@@ -83,3 +83,98 @@ threats:
   - {id: T24, target: scorer, category: R, title: Scorer cannot show which model version produced a past flag, likelihood: 3, impact: 4, status: open}
   - {id: T25, target: scorer, category: D, title: Crafted transfer graph with huge fan-out makes scoring take seconds, likelihood: 2, impact: 4, status: open}
   - {id: T26, target: case_db, category: D, title: Case database fills its disk during a scam wave and stops accepting flags, likelihood: 2, impact: 4, status: open}
+  - id: T27
+    target: analyst_console
+    category: S
+    title: Unauthorized session spoofing on analyst portal
+    likelihood: 3
+    impact: 3
+    status: open
+
+  - id: T28
+    target: analyst_console
+    category: T
+    title: Local workstation script tampering on console client
+    likelihood: 2
+    impact: 3
+    status: open
+
+  - id: T29
+    target: analyst_console
+    category: R
+    title: Analyst identity repudiation during manual case review
+    likelihood: 2
+    impact: 3
+    status: open
+
+  - id: T30
+    target: analyst_console
+    category: I
+    title: Browser memory inspection reveals sensitive case data
+    likelihood: 3
+    impact: 4
+    status: open
+
+  - id: T31
+    target: analyst_console
+    category: D
+    title: Resource exhaustion attack on analyst web interface
+    likelihood: 2
+    impact: 3
+    status: open
+
+  - id: T32
+    target: analyst_console
+    category: E
+    title: Privilege escalation via administrative console vulnerability
+    likelihood: 2
+    impact: 4
+    status: open
+
+  - id: T33
+    target: case_db
+    category: T
+    title: Direct SQL injection tampering on investigation cases database
+    likelihood: 2
+    impact: 4
+    status: open
+
+  - id: T34
+    target: f08
+    category: T
+    title: Man in the middle query parameter alteration on analyst flow
+    likelihood: 2
+    impact: 3
+    status: open
+
+  - id: T35
+    target: f08
+    category: I
+    title: Unencrypted traffic eavesdropping on investigation database link
+    likelihood: 2
+    impact: 4
+    status: open
+
+  - id: T36
+    target: f08
+    category: D
+    title: Network packet flooding targeting analyst database connection
+    likelihood: 2
+    impact: 3
+    status: open
+
+  - id: T37
+    target: scorer
+    category: E
+    title: Process container breakout leading to root privileges on scoring service
+    likelihood: 2
+    impact: 5
+    status: open
+
+  - id: T38
+    target: feature_store
+    category: I
+    title: Unauthorized database exfiltration exposing sensitive customer PII records
+    likelihood: 3
+    impact: 5
+    status: open
